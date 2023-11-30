@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     locationBuilder: RoutesLocationBuilder(
       routes: {
         '/': (context, state, data) => const MyHomePage(
-              title: 'PWA Test App',
+              title: 'AmigoLab PWA',
             ),
       },
     ),
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'PWA Demo',
+      title: 'AmigoLab PWA',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -60,6 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
@@ -68,11 +69,13 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              'You have pushed the\nbutton this many times:',
+              textAlign: TextAlign.center,
             ),
             AnimatedRotation(
               turns: _counter.toDouble(),
-              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              duration: const Duration(milliseconds: 450),
               child: Text(
                 '$_counter',
                 style: Theme.of(context).textTheme.headlineLarge,
@@ -81,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(
               height: 60,
             ),
-            if (true)
+            if (PWAInstall().installPromptEnabled)
               ElevatedButton(
                   onPressed: () {
                     try {
