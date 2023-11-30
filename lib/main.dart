@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:pwa_install/pwa_install.dart';
 
@@ -5,22 +6,33 @@ void main() {
   PWAInstall().setup(installCallback: () {
     debugPrint('APP INSTALLED!');
   });
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final routerDelegate = BeamerDelegate(
+    locationBuilder: RoutesLocationBuilder(
+      routes: {
+        '/': (context, state, data) => const MyHomePage(
+              title: 'PWA Test App',
+            ),
+      },
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'PWA Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'PWA Test App'),
+      routeInformationParser: BeamerParser(),
+      routerDelegate: routerDelegate,
     );
   }
 }
@@ -69,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(
               height: 60,
             ),
-            if (PWAInstall().installPromptEnabled)
+            if (true)
               ElevatedButton(
                   onPressed: () {
                     try {
